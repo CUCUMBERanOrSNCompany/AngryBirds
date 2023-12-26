@@ -27,8 +27,11 @@ public class PathPoints : MonoBehaviour
 
         lastIndex++;
 
-        if (lastIndex == pathTemplates.Length) 
+        if (lastIndex == pathTemplates.Length)
+        {
             lastIndex = 0;
+        }
+            
     }
 
     public void Clear()

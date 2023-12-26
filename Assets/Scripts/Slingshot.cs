@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Slingshot : MonoBehaviour
 {
@@ -22,12 +23,17 @@ public class Slingshot : MonoBehaviour
     public float birdPositionOffset;
 
     Rigidbody2D bird;
+
     Collider2D birdCollider;
 
     public float force;
 
+    [SerializeField] private AimingLine _aimingLine = null;
+
     void Start()
     {
+        _aimingLine = GetComponent<AimingLine>();
+
         lineRenderers[0].positionCount = 2;
         lineRenderers[1].positionCount = 2;
         lineRenderers[0].SetPosition(0, stripPositions[0].position);
@@ -65,11 +71,17 @@ public class Slingshot : MonoBehaviour
             if (birdCollider)
             {
                 birdCollider.enabled = true;
+
+                // Call AimingLineCreator to update the aiming line
+                _aimingLine.AimingLineCreator(PathPoints.instance.lastPoints.Select(point => point.transform.position));
             }
         }
         else
         {
             ResetStrips();
+
+            // Clear the aiming line when not dragging
+            //_aimingLine.AimingLineCreator(new Vector3[0]);
         }
     }
 
