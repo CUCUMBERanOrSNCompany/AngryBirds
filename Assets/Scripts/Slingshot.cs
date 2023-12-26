@@ -72,16 +72,18 @@ public class Slingshot : MonoBehaviour
             {
                 birdCollider.enabled = true;
 
-                // Call AimingLineCreator to update the aiming line
-                _aimingLine.AimingLineCreator(PathPoints.instance.lastPoints.Select(point => point.transform.position));
+                // Calculate trajectory points based on the current slingshot parameters
+                var trajectoryPoints = CalculateTrajectoryPoints();
+
+                // Update the aiming line during the aiming phase
+                _aimingLine.AimingLineCreator(trajectoryPoints);
+
             }
         }
         else
         {
+            _aimingLine.AimingLineCreator(new Vector3[0]);
             ResetStrips();
-
-            // Clear the aiming line when not dragging
-            //_aimingLine.AimingLineCreator(new Vector3[0]);
         }
     }
 
@@ -95,6 +97,9 @@ public class Slingshot : MonoBehaviour
         isMouseDown = false;
         Shoot();
         currentPosition = idlePosition.position;
+
+        // Clear the AimingLine after shooting
+        _aimingLine.AimingLineCreator(new Vector3[0]);
     }
 
     void Shoot()
@@ -133,5 +138,22 @@ public class Slingshot : MonoBehaviour
     {
         vector.y = Mathf.Clamp(vector.y, bottomBoundary, 1000);
         return vector;
+    }
+
+    List<Vector3> CalculateTrajectoryPoints()
+    {
+        List<Vector3> points = new List<Vector3>();
+
+        // Simulate the trajectory based on the current slingshot parameters
+        // You may need to adjust this based on your specific game mechanics
+
+        // Sample points for demonstration; replace this with your trajectory calculation logic
+        for (float t = 0; t <= 1f; t += 0.1f)
+        {
+            //Vector3 point = /* Your trajectory calculation here based on t */;
+            //points.Add(point);
+        }
+
+        return points;
     }
 }
