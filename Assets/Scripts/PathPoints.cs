@@ -5,6 +5,8 @@ public class PathPoints : MonoBehaviour
 {
     public GameObject[] pathTemplates;
 
+    public GameObject[] aimingPathTemplates;
+
     public static PathPoints instance;
 
     public List<GameObject> lastPoints;
@@ -19,9 +21,21 @@ public class PathPoints : MonoBehaviour
         lastPoints = new List<GameObject>();
     }
 
-    public void CreateCurrentPathPoint(Vector3 position)
+    public void CreateCurrentPathPoint(Vector3 position, bool isAimming = false)
     {
-        GameObject point = Instantiate(pathTemplates[lastIndex], position, Quaternion.identity, transform);
+        GameObject point;
+
+        if(isAimming)
+        {
+            point = Instantiate(aimingPathTemplates[lastIndex],
+                position, Quaternion.identity, transform);
+        }
+        else
+        {
+            point = Instantiate(pathTemplates[lastIndex],
+                position, Quaternion.identity, transform);
+        }
+        
         point.SetActive(true);
         lastPoints.Add(point);
 
