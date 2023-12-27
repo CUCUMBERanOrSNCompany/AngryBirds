@@ -1,159 +1,182 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class Slingshot : MonoBehaviour
 {
-    public LineRenderer[] lineRenderers;
-    public Transform[] stripPositions;
-    public Transform center;
-    public Transform idlePosition;
+    public LineRenderer[] LineRenderers;
+    public Transform[] StripPositions;
+    public Transform Center;
+    public Transform IdlePosition;
+    public Vector3 CurrentPosition;
+    public float MaxLengthOfSling;
+    public float BottomBoundary;
 
-    public Vector3 currentPosition;
+    private bool _isMouseDown;
+    public GameObject BirdPrefab;
+    public float BirdPositionOffset;
+    private Rigidbody2D _bird;
+    private Collider2D _birdCollider;
+    public float Force;
 
-    public float maxLength;
+    private LineRenderer _aimingLineRenderer;  // A single LineRenderer for aiming line
+    private List<Vector3> _aimingLinePoints;    // List to store aiming line points
+    private const int AimingLinePointsCount = 50;
 
-    public float bottomBoundary;
-
-    bool isMouseDown;
-
-    public GameObject birdPrefab;
-
-    public float birdPositionOffset;
-
-    Rigidbody2D bird;
-
-    Collider2D birdCollider;
-
-    public float force;
-
-    [SerializeField] private AimingLine _aimingLine = null;
+    [SerializeField] private PathPoints _pathPoints = null;
 
     void Start()
     {
-        _aimingLine = GetComponent<AimingLine>();
+        LineRenderers[0].positionCount = 2;
+        LineRenderers[1].positionCount = 2;
+        LineRenderers[0].SetPosition(0, StripPositions[0].position);
+        LineRenderers[1].SetPosition(0, StripPositions[1].position);
 
-        lineRenderers[0].positionCount = 2;
-        lineRenderers[1].positionCount = 2;
-        lineRenderers[0].SetPosition(0, stripPositions[0].position);
-        lineRenderers[1].SetPosition(0, stripPositions[1].position);
+        InitializeAimingLineRenderer();
 
         CreateBird();
     }
 
+    void InitializeAimingLineRenderer()
+    {
+        GameObject aimingLineObject = new GameObject("AimingLine");
+        _aimingLineRenderer = aimingLineObject.AddComponent<LineRenderer>();
+        _aimingLineRenderer.positionCount = AimingLinePointsCount;
+        _aimingLineRenderer.enabled = false;
+        _aimingLinePoints = new List<Vector3>();
+    }
+
+
+
     void CreateBird()
     {
-        bird = Instantiate(birdPrefab).GetComponent<Rigidbody2D>();
-        birdCollider = bird.GetComponent<Collider2D>();
-        birdCollider.enabled = false;
+        _bird = Instantiate(BirdPrefab).GetComponent<Rigidbody2D>();
+        _birdCollider = _bird.GetComponent<Collider2D>();
+        _birdCollider.enabled = false;
 
-        bird.isKinematic = true;
+        _bird.isKinematic = true;
 
         ResetStrips();
     }
 
+    void UpdateAimingLine()
+    {
+        if (_bird != null)
+        {
+            _aimingLinePoints = CalculateTrajectoryPoints(_bird.position, _bird.velocity, 0.1f, AimingLinePointsCount);
+            _aimingLineRenderer.SetPositions(_aimingLinePoints.ToArray());
+
+            if (_pathPoints != null)
+            {
+                // Create path points using the pathPoints reference
+                foreach (Vector3 point in _aimingLinePoints)
+                {
+                    _pathPoints.CreateCurrentPathPoint(point);
+                }
+            }
+        }
+    }
+
+
     void Update()
     {
-        if (isMouseDown)
+        if (_isMouseDown)
         {
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = 10;
 
-            currentPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            currentPosition = center.position + Vector3.ClampMagnitude(currentPosition
-                - center.position, maxLength);
+            CurrentPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            CurrentPosition = Center.position + Vector3.ClampMagnitude(CurrentPosition - Center.position, MaxLengthOfSling);
 
-            currentPosition = ClampBoundary(currentPosition);
+            CurrentPosition = ClampBoundary(CurrentPosition);
 
-            SetStrips(currentPosition);
+            SetStrips(CurrentPosition);
 
-            if (birdCollider)
+            if (_birdCollider)
             {
-                birdCollider.enabled = true;
-
-                // Calculate trajectory points based on the current slingshot parameters
-                var trajectoryPoints = CalculateTrajectoryPoints();
-
-                // Update the aiming line during the aiming phase
-                _aimingLine.AimingLineCreator(trajectoryPoints);
-
+                _birdCollider.enabled = true;
+                UpdateAimingLine();
             }
         }
         else
         {
-            _aimingLine.AimingLineCreator(new Vector3[0]);
             ResetStrips();
+            _aimingLineRenderer.enabled = false;
         }
     }
 
     private void OnMouseDown()
     {
-        isMouseDown = true;
+        _isMouseDown = true;
+        _aimingLineRenderer.enabled = true;
     }
 
     private void OnMouseUp()
     {
-        isMouseDown = false;
+        _isMouseDown = false;
         Shoot();
-        currentPosition = idlePosition.position;
-
-        // Clear the AimingLine after shooting
-        _aimingLine.AimingLineCreator(new Vector3[0]);
+        UpdateAimingLine();
+        CurrentPosition = IdlePosition.position;
+        _aimingLineRenderer.enabled = false;
     }
 
     void Shoot()
     {
-        bird.isKinematic = false;
-        Vector3 birdForce = (currentPosition - center.position) * force * -1;
-        bird.velocity = birdForce;
+        _bird.isKinematic = false;
+        Vector3 birdForce = (CurrentPosition - Center.position) * Force * -1;
+        _bird.velocity = birdForce;
 
-        bird.GetComponent<Bird>().Release();
+        _bird.GetComponent<Bird>().Release();
 
-        bird = null;
-        birdCollider = null;
+        _bird = null;
+        _birdCollider = null;
         Invoke("CreateBird", 2);
     }
 
     void ResetStrips()
     {
-        currentPosition = idlePosition.position;
-        SetStrips(currentPosition);
+        CurrentPosition = IdlePosition.position;
+        SetStrips(CurrentPosition);
     }
 
     void SetStrips(Vector3 position)
     {
-        lineRenderers[0].SetPosition(1, position);
-        lineRenderers[1].SetPosition(1, position);
+        LineRenderers[0].SetPosition(1, position);
+        LineRenderers[1].SetPosition(1, position);
 
-        if (bird)
+        if (_bird)
         {
-            Vector3 dir = position - center.position;
-            bird.transform.position = position + dir.normalized * birdPositionOffset;
-            bird.transform.right = -dir.normalized;
+            Vector3 dir = position - Center.position;
+            _bird.transform.position = position + dir.normalized * BirdPositionOffset;
+            _bird.transform.right = -dir.normalized;
         }
     }
 
     Vector3 ClampBoundary(Vector3 vector)
     {
-        vector.y = Mathf.Clamp(vector.y, bottomBoundary, 1000);
+        vector.y = Mathf.Clamp(vector.y, BottomBoundary, 1000);
         return vector;
     }
 
-    List<Vector3> CalculateTrajectoryPoints()
+    List<Vector3> CalculateTrajectoryPoints(Vector3 startPosition, Vector3 initialVelocity, float timeStep, int numPoints)
     {
         List<Vector3> points = new List<Vector3>();
 
-        // Simulate the trajectory based on the current slingshot parameters
-        // You may need to adjust this based on your specific game mechanics
+        Vector3 currentPosition = startPosition;
+        Vector3 currentVelocity = initialVelocity;
 
-        // Sample points for demonstration; replace this with your trajectory calculation logic
-        for (float t = 0; t <= 1f; t += 0.1f)
+        _pathPoints.Clear();
+
+        for (int i = 0; i < numPoints; i++)
         {
-            //Vector3 point = /* Your trajectory calculation here based on t */;
-            //points.Add(point);
+            currentPosition += currentVelocity * timeStep;
+            currentVelocity += Physics.gravity * timeStep;
+
+            points.Add(currentPosition);
         }
 
         return points;
     }
+
+    
+
 }
