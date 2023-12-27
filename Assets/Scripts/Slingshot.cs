@@ -269,7 +269,7 @@ public class Slingshot : MonoBehaviour
                 CurrentPosition.y - Center.position.y);
 
             _aimingLinePoints = CalculateTrajectoryPoints(_bird.position,
-                _bird.velocity, PathPoints.Instance.TimeInterval, slingshotAngle);
+                _bird.velocity, 0.075f, slingshotAngle);
 
             // Clear the path points
             PathPoints.Instance.Clear();
