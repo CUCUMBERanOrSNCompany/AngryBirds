@@ -74,7 +74,6 @@ public class PointsPool : MonoBehaviour
     /// <returns>Reference to the point</returns>
     public GameObject AddPathPoint(Vector3 position)
     {
-        Debug.Log($"In");
         if(_pathPointsPool.Count > _pathPointsIndex)
         {
             _pathPointsPool[_pathPointsIndex].transform.position = position;
