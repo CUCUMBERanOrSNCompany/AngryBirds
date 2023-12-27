@@ -21,6 +21,8 @@ public class SceneMover : MonoBehaviour
     /// </summary>
     public void NextScene()
     {
+        int index = SceneManager.GetActiveScene().buildIndex + 1;
+        SceneManager.LoadScene(index % SceneManager.sceneCountInBuildSettings);
 
     }
 }

@@ -18,7 +18,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Turning the list of enemies to a HashSet so no enemy can be removed more than once.
     /// </summary>
-    private HashSet<Pig> _enemies = new HashSet<Pig>();
+    private HashSet<EnemiesBase> _enemies = new HashSet<EnemiesBase>();
 
     /// <summary>
     /// Let us to dispose unused listeners.
@@ -30,9 +30,9 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        foreach(GameObject pig in _pigs)
+        foreach(GameObject enemy in _pigs)
         {
-            _enemies.Add(pig.GetComponent<Pig>());
+            _enemies.Add(enemy.GetComponent<EnemiesBase>());
         }
 
         ListenerSetter();
@@ -43,7 +43,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void ListenerSetter()
     {
-        foreach(Pig enemy in _enemies)
+        foreach(var enemy in _enemies)
         {
             enemy.IsAlive
             .Subscribe(isAlive =>

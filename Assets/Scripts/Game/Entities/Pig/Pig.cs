@@ -7,18 +7,12 @@ using UniRx;
 /// <summary>
 /// Responsible for the pig logic
 /// </summary>
-public class Pig : MonoBehaviour, IDisposable
+public class Pig : EnemiesBase
 {
     /// <summary>
     /// Counting the number of times the pig collided
     /// </summary>
     protected int _collisionCounter = 0;
-
-    /// <summary>
-    /// Reactive property that reports the current state of the pig
-    /// </summary>
-    public ReactiveProperty<bool> IsAlive { get; private set; }
-        = new ReactiveProperty<bool>(true);
 
     /// <summary>
     /// Triggers whenever a collision detected
@@ -40,7 +34,7 @@ public class Pig : MonoBehaviour, IDisposable
     /// <summary>
     /// Killing the object
     /// </summary>
-    public virtual void Dispose()
+    public override void Dispose()
     {
         IsAlive.Value = false;
 
