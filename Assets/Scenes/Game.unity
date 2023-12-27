@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 72567074}
   - component: {fileID: 72567073}
   m_Layer: 0
-  m_Name: 0
+  m_Name: Path0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 296036168}
   - component: {fileID: 296036169}
   m_Layer: 0
-  m_Name: 2
+  m_Name: Path2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -731,7 +731,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &386649153
 RectTransform:
@@ -1133,6 +1133,7 @@ GameObject:
   - component: {fileID: 426011079}
   - component: {fileID: 426011080}
   - component: {fileID: 426011081}
+  - component: {fileID: 426011082}
   m_Layer: 0
   m_Name: Backend Manager
   m_TagString: Untagged
@@ -1185,6 +1186,27 @@ MonoBehaviour:
   - {fileID: 1962501494}
   - {fileID: 35606817}
   - {fileID: 1930420177}
+  _endScreen: {fileID: 979887463}
+--- !u!114 &426011082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426011078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af65cfb80be8c4d01856d656051a2e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pathTemplates:
+  - {fileID: 72567072}
+  - {fileID: 1637556808}
+  - {fileID: 296036167}
+  _aimingTemplates:
+  - {fileID: 1122325977}
+  - {fileID: 402770357}
+  - {fileID: 1450461762}
 --- !u!1 &444377705
 GameObject:
   m_ObjectHideFlags: 0
@@ -2492,6 +2514,7 @@ MonoBehaviour:
   - {fileID: 402770357}
   - {fileID: 1450461762}
   TimeInterval: 0.075
+  _pointsPool: {fileID: 426011082}
 --- !u!4 &783216553
 Transform:
   m_ObjectHideFlags: 0
@@ -2888,6 +2911,7 @@ GameObject:
   - component: {fileID: 979887460}
   - component: {fileID: 979887462}
   - component: {fileID: 979887461}
+  - component: {fileID: 979887463}
   m_Layer: 5
   m_Name: LevelCompleted
   m_TagString: Untagged
@@ -2956,6 +2980,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979887459}
   m_CullTransparentMesh: 1
+--- !u!114 &979887463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979887459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f7185d7b66b476abd2b84690bf6276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toOpen: 1
+  _isSwitchBtn: 0
+  _uiComponent: {fileID: 979887459}
 --- !u!1 &982303353
 GameObject:
   m_ObjectHideFlags: 0
@@ -4682,7 +4721,7 @@ GameObject:
   - component: {fileID: 1637556809}
   - component: {fileID: 1637556810}
   m_Layer: 0
-  m_Name: 1
+  m_Name: Path1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

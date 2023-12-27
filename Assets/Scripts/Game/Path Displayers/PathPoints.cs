@@ -32,9 +32,9 @@ public class PathPoints : MonoBehaviour
     public float TimeInterval = 0f;
 
     /// <summary>
-    /// Index to the visual template
+    /// Reference to the points pool
     /// </summary>
-    private int _lastIndex = 0;
+    [SerializeField] private PointsPool _pointsPool = null;
 
     /// <summary>
     /// Instantiating the class and setting up the singleton
@@ -56,19 +56,14 @@ public class PathPoints : MonoBehaviour
 
         if(isAiming)
         {
-            point = Instantiate(AimingPathTemplates[_lastIndex % AimingPathTemplates.Length],
-                position, Quaternion.identity, transform);
+            point = _pointsPool.AddAimingPoint(position);
         }
         else
         {
-            point = Instantiate(PathTemplates[_lastIndex % PathTemplates.Length],
-                position, Quaternion.identity, transform);
+            point = _pointsPool.AddPathPoint(position);
         }
         
-        point.SetActive(true);
         _lastPoints.Add(point);
-
-        _lastIndex++;
     }
 
     /// <summary>
@@ -76,10 +71,8 @@ public class PathPoints : MonoBehaviour
     /// </summary>
     public void Clear()
     {
-        //todo: Pooling on the points instead of destroying them.
-        //Consider using IDisposable
-        _lastPoints.ForEach((obj) => Destroy(obj));
+        _pointsPool.ClearAimingPoints();
+        _pointsPool.ClearPathPoints();
         _lastPoints.Clear();
-        _lastIndex = 0;
     }
 }
