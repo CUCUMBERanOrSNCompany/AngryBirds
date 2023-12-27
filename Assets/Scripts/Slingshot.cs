@@ -91,7 +91,7 @@ public class Slingshot : MonoBehaviour
     /// <summary>
     /// Reference to the PathPoints class
     /// </summary>
-    [SerializeField] private PathPoints _pathPoints = null;
+    //[SerializeField] private PathPoints _pathPoints = null;
     #endregion
 
     #region Initializers
@@ -269,10 +269,10 @@ public class Slingshot : MonoBehaviour
                 CurrentPosition.y - Center.position.y);
 
             _aimingLinePoints = CalculateTrajectoryPoints(_bird.position,
-                _bird.velocity, 0.075f, slingshotAngle);
+                _bird.velocity, PathPoints.Instance.TimeInterval, slingshotAngle);
 
             // Clear the path points
-            _pathPoints.Clear();
+            PathPoints.Instance.Clear();
 
             // Set the positions of the line renderer
             _aimingLineRenderer.positionCount = _aimingLinePoints.Count;
@@ -283,8 +283,8 @@ public class Slingshot : MonoBehaviour
                 _aimingLineRenderer.SetPosition(i, _aimingLinePoints[i]);
 
                 // Create path points using the pathPoints reference
-                _pathPoints.CreateCurrentPathPoint(_aimingLinePoints[i],
-                    isAimming:true);
+                PathPoints.Instance.CreateCurrentPathPoint(_aimingLinePoints[i],
+                    isAiming:true);
             }
 
             // Ensure the LineRenderer is enabled
@@ -314,7 +314,7 @@ public class Slingshot : MonoBehaviour
         Vector3 currentPosition = startPosition;
         Vector3 currentVelocity = initialVelocity;
 
-        _pathPoints.Clear();
+        PathPoints.Instance.Clear();
 
         for (int i = 0; i < AimingLinePointsCount; i++)
         {
@@ -324,7 +324,7 @@ public class Slingshot : MonoBehaviour
             points.Add(currentPosition);
 
             // Create path points using the pathPoints reference
-            _pathPoints.CreateCurrentPathPoint(currentPosition, isAimming:true);
+            PathPoints.Instance.CreateCurrentPathPoint(currentPosition, isAiming:true);
         }
 
         // Calculate the average direction of the trajectory

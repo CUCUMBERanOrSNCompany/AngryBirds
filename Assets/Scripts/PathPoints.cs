@@ -1,57 +1,85 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Responsible for displaying paths.
+/// </summary>
 public class PathPoints : MonoBehaviour
 {
-    public GameObject[] pathTemplates;
+    /// <summary>
+    /// Template of object that build a shooting path
+    /// </summary>
+    [SerializeField] private GameObject[] PathTemplates;
 
-    public GameObject[] aimingPathTemplates;
+    /// <summary>
+    /// Template of object that build an aiming line
+    /// </summary>
+    [SerializeField] private GameObject[] AimingPathTemplates;
 
-    public static PathPoints instance;
+    /// <summary>
+    /// Singleton
+    /// </summary>
+    public static PathPoints Instance { get; private set; }
 
-    public List<GameObject> lastPoints;
+    /// <summary>
+    /// The list of points that we registered
+    /// </summary>
+    private List<GameObject> _lastPoints;
 
-    public float timeInterval;
+    /// <summary>
+    /// Dictating the time interval that we wait between getting each new point
+    /// </summary>
+    public float TimeInterval;
 
-    int lastIndex = 0;
+    /// <summary>
+    /// Index to the visual template
+    /// </summary>
+    private int _lastIndex = 0;
 
+    /// <summary>
+    /// Instantiating the class and setting up the singleton
+    /// </summary>
     void Start()
     {
-        instance = this;
-        lastPoints = new List<GameObject>();
+        Instance = this;
+        _lastPoints = new List<GameObject>();
     }
 
-    public void CreateCurrentPathPoint(Vector3 position, bool isAimming = false)
+    /// <summary>
+    /// Registering a new point to the path.
+    /// </summary>
+    /// <param name="position">The position of the point</param>
+    /// <param name="isAiming">Is the point part of an aiming path or regular?</param>
+    public void CreateCurrentPathPoint(Vector3 position, bool isAiming = false)
     {
         GameObject point;
 
-        if(isAimming)
+        if(isAiming)
         {
-            point = Instantiate(aimingPathTemplates[lastIndex],
+            point = Instantiate(AimingPathTemplates[_lastIndex % AimingPathTemplates.Length],
                 position, Quaternion.identity, transform);
         }
         else
         {
-            point = Instantiate(pathTemplates[lastIndex],
+            point = Instantiate(PathTemplates[_lastIndex % PathTemplates.Length],
                 position, Quaternion.identity, transform);
         }
         
         point.SetActive(true);
-        lastPoints.Add(point);
+        _lastPoints.Add(point);
 
-        lastIndex++;
-
-        if (lastIndex == pathTemplates.Length)
-        {
-            lastIndex = 0;
-        }
-            
+        _lastIndex++;
     }
 
+    /// <summary>
+    /// Clearing the points list.
+    /// </summary>
     public void Clear()
     {
-        lastPoints.ForEach((obj) => Destroy(obj));
-        lastPoints.Clear();
-        lastIndex = 0;
+        //todo: Pooling on the points instead of destroying them.
+        //Consider using IDisposable
+        _lastPoints.ForEach((obj) => Destroy(obj));
+        _lastPoints.Clear();
+        _lastIndex = 0;
     }
 }

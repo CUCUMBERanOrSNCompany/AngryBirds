@@ -1306,15 +1306,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da287ad21422b0d45a8892fc9b26f3fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathTemplates:
+  PathTemplates:
   - {fileID: 72567072}
   - {fileID: 1637556808}
   - {fileID: 296036167}
-  aimingPathTemplates:
+  AimingPathTemplates:
   - {fileID: 1122325977}
   - {fileID: 402770357}
   - {fileID: 1450461762}
-  lastPoints: []
   timeInterval: 0.075
 --- !u!4 &783216553
 Transform:
@@ -3157,7 +3156,6 @@ MonoBehaviour:
   BirdPrefab: {fileID: 552990144328371565, guid: 0fcb7f633e3bc9d428e11104884676e4, type: 3}
   BirdPositionOffset: -0.4
   Force: 5
-  _pathPoints: {fileID: 783216552}
 --- !u!4 &2045168418
 Transform:
   m_ObjectHideFlags: 0
