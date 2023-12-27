@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using UniRx;
+using System;
 
-/// <summary>
-/// Responsible for the pig logic
-/// </summary>
-public class Pig : MonoBehaviour, IDisposable
+public class HamasTerrorist : MonoBehaviour, IDisposable
 {
     /// <summary>
     /// Counting the number of times the pig collided
@@ -26,14 +23,14 @@ public class Pig : MonoBehaviour, IDisposable
     /// <param name="collision">object we collided with</param>
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if(IsAlive.Value)
+        Debug.Log("Hi");
+        if (IsAlive.Value)
         {
             _collisionCounter += 1;
 
             // It is possible for the pig not to hit the ground,
             // and we still need to classify the hit
-            if ((collision.gameObject.tag == "Ground")
-                || (_collisionCounter > 2)) Dispose();
+            if (_collisionCounter > 1) Dispose();
         }
     }
 
@@ -44,12 +41,6 @@ public class Pig : MonoBehaviour, IDisposable
     {
         IsAlive.Value = false;
 
-        gameObject.GetComponent<SpriteRenderer>().sprite
-            = PigsStateList.Instance.PigsStates[HealthEnum.Injured];
-
-        gameObject.GetComponent<PolygonCollider2D>().enabled = false;
-
-        gameObject.GetComponent<Collider2D>().enabled = false;
+        gameObject.SetActive(false);
     }
-    
 }

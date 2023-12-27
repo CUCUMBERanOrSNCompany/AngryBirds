@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Defines the Bird entity
 /// </summary>
-public class Bird : MonoBehaviour
+public class Bird : MonoBehaviour, IDisposable
 {
     /// <summary>
     /// Indicates if the object is collided.
@@ -41,5 +42,15 @@ public class Bird : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         IsCollided = true;
+
+        if (collision.gameObject.tag == "Ground") Dispose();
+    }
+
+    /// <summary>
+    /// Disposing the gameobject
+    /// </summary>
+    public void Dispose()
+    {
+        gameObject.GetComponent<CircleCollider2D>().enabled = false;
     }
 }

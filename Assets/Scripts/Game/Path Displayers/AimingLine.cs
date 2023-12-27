@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Isn't being used
+/// </summary>
 [RequireComponent(typeof(LineRenderer))]
 public class AimingLine : MonoBehaviour
 {

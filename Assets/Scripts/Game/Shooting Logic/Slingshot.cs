@@ -203,15 +203,18 @@ public class Slingshot : MonoBehaviour
     /// </summary>
     void Shoot()
     {
-        _bird.isKinematic = false;
-        Vector3 birdForce = (CurrentPosition - Center.position) * Force * -1;
-        _bird.velocity = birdForce;
+        if (_bird)
+        {
+            _bird.isKinematic = false;
+            Vector3 birdForce = (CurrentPosition - Center.position) * Force * -1;
+            _bird.velocity = birdForce;
 
-        _bird.GetComponent<Bird>().Release();
+            _bird.GetComponent<Bird>().Release();
 
-        _bird = null;
-        _birdCollider = null;
-        Invoke("CreateBird", 2);
+            _bird = null;
+            _birdCollider = null;
+            Invoke("CreateBird", 2);
+        }
     }
 
     /// <summary>
