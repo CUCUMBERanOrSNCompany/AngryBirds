@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Angry Birds.unity
+    guid: 9da9e48b8d5084e2fa6bf7a38319ee5c
+  - enabled: 1
     path: Assets/Scenes/FCKHMS.unity
     guid: 4a475c01be2504d1c9922566174a6240
   m_configObjects: {}
