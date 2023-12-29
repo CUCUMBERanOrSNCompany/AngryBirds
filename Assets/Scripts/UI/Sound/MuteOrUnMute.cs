@@ -13,20 +13,16 @@ public class MuteOrUnMute : MonoBehaviour
     [SerializeField] private List<AudioSource> _audioSources = null;
 
     /// <summary>
-    /// State of the Audio Sources
-    /// </summary>
-    private bool _isMuted = false;
-
-    /// <summary>
     /// Switching the isMuted State and applying it to the audio sources.
     /// </summary>
     public void ChangeMuteStateOfAllSources()
     {
-        _isMuted = !_isMuted;
+
+        MuteFlag.Instance.IsMuted.Value = !MuteFlag.Instance.IsMuted.Value;
 
         foreach(var source in _audioSources)
         {
-            source.mute = _isMuted;
+            source.mute = MuteFlag.Instance.IsMuted.Value;
         }
     }
 }

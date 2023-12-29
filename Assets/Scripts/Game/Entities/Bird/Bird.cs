@@ -6,12 +6,26 @@ using System;
 /// <summary>
 /// Defines the Bird entity
 /// </summary>
+[RequireComponent(typeof(SFXManager))]
 public class Bird : MonoBehaviour, IDisposable
 {
     /// <summary>
     /// Indicates if the object is collided.
     /// </summary>
     public bool IsCollided;
+
+    /// <summary>
+    /// Reference to the SFX Manager component
+    /// </summary>
+    private SFXManager _sfxManager = null;
+
+    /// <summary>
+    /// Making references.
+    /// </summary>
+    private void Start()
+    {
+        _sfxManager = GetComponent<SFXManager>();
+    }
 
     /// <summary>
     /// Observing the actual path of the object.
@@ -41,9 +55,11 @@ public class Bird : MonoBehaviour, IDisposable
     /// <param name="collision"></param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag != "Ground") _sfxManager.PlaySFXNoOverride(SoundsEnum.Explode);
+
         IsCollided = true;
 
-        if (collision.gameObject.tag == "Ground") Dispose();
+        Invoke("Dispose", 1);
     }
 
     /// <summary>
@@ -51,6 +67,7 @@ public class Bird : MonoBehaviour, IDisposable
     /// </summary>
     public void Dispose()
     {
-        gameObject.GetComponent<CircleCollider2D>().enabled = false;
+        //gameObject.GetComponent<CircleCollider2D>().enabled = false;
+        Destroy(gameObject);
     }
 }

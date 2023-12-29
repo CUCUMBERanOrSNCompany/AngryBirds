@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Responsible for the slingshot logic.
 /// </summary>
+[RequireComponent(typeof(SFXManager))]
 public class Slingshot : MonoBehaviour
 {
     #region fields
@@ -73,6 +74,11 @@ public class Slingshot : MonoBehaviour
     /// </summary>
     public float Force;
 
+    /// <summary>
+    /// Reference to the SFX Manager component
+    /// </summary>
+    private SFXManager _sfxManager = null;
+
     #endregion
 
     #region Initializers
@@ -81,6 +87,8 @@ public class Slingshot : MonoBehaviour
     /// </summary>
     void Start()
     {
+        _sfxManager = GetComponent<SFXManager>();
+
         InitializeStripLinesRenderers();
 
         CreateBird();
@@ -136,6 +144,7 @@ public class Slingshot : MonoBehaviour
                 _birdCollider.enabled = true;
                 AimingLine.Instance.UpdateAimingLine(CurrentPosition, Center, _bird);
 
+                _sfxManager.PlaySFXNoOverride(SoundsEnum.Aim);
             }
         }
         else
@@ -179,6 +188,8 @@ public class Slingshot : MonoBehaviour
             _bird.isKinematic = false;
             Vector3 birdForce = (CurrentPosition - Center.position) * Force * -1;
             _bird.velocity = birdForce;
+
+            _sfxManager.PlaySFXOverride(SoundsEnum.Shoot);
 
             _bird.GetComponent<Bird>().Release();
 
