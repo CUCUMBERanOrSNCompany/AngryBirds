@@ -8,8 +8,14 @@ using UniRx;
 /// </summary>
 public class MuteFlag : MonoBehaviour
 {
+    /// <summary>
+    /// Singleton
+    /// </summary>
     public static MuteFlag Instance { get; private set; } = null;
 
+    /// <summary>
+    /// Mute State
+    /// </summary>
     public ReactiveProperty<bool> IsMuted { get; set; }
         = new ReactiveProperty<bool>(false);
 

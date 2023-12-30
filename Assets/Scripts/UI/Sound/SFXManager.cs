@@ -20,11 +20,39 @@ public class SFXManager : MonoBehaviour
     private CompositeDisposable _disposables = new CompositeDisposable();
 
     /// <summary>
+    /// Checking if we are waiting for mute flag instance.
+    /// </summary>
+    private bool _isWaitingForMuteFlagInstance = true;
+
+    /// <summary>
     /// Getting reference for SFX audio source.
     /// </summary>
     void Start()
     {
         _source = GetComponent<AudioSource>();
+
+        SettingReferenceToMuteFlag();
+    }
+
+    /// <summary>
+    /// Checking if reference was created to the mute flag instance
+    /// and setting it if not
+    /// </summary>
+    private void SettingReferenceToMuteFlag()
+    {
+        if (MuteFlag.Instance != null)
+        {
+            _isWaitingForMuteFlagInstance = false;
+            FindMuteState();
+        }
+        
+    }
+
+    /// <summary>
+    /// Setting reference to mute flag instance
+    /// </summary>
+    private void FindMuteState()
+    {
         _source.mute = MuteFlag.Instance.IsMuted.Value;
         ListenerSetter();
     }
@@ -52,6 +80,8 @@ public class SFXManager : MonoBehaviour
             return;
         }
 
+        if (_isWaitingForMuteFlagInstance) SettingReferenceToMuteFlag();
+
         _source.clip = SFXDictionary.Instance.GetSFX(key);
         _source.Play();
     }
@@ -62,6 +92,8 @@ public class SFXManager : MonoBehaviour
     /// <param name="key"></param>
     public void PlaySFXOverride(SoundsEnum key)
     {
+        if (_isWaitingForMuteFlagInstance) SettingReferenceToMuteFlag();
+
         _source.Stop();
         _source.clip = SFXDictionary.Instance.GetSFX(key);
         _source.Play();
