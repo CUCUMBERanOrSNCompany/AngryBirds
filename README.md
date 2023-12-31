@@ -57,6 +57,6 @@ This assignment is part of my job application to Simbionix. I was assigned to bu
 
 # Bootstrapping:
 To demonstrate my ability to read and understand other's people code, I bootstrapped from the following project
-[https://github.com/ggghostmaker/angrybirds](Angry Birds by ggghostmaker). He also published a [https://www.youtube.com/watch?v=r7UDs5kLoB4](video) tutorial where he live-coding the game, but for the sake of the assignment, I did not watched the video and integrated the project straight to a clean Unity project, covering the various required (and optional) features on top of it, while refactoring the code in the process.
+(Angry Birds by ggghostmaker)[https://github.com/ggghostmaker/angrybirds]. He also published a [https://www.youtube.com/watch?v=r7UDs5kLoB4](video) tutorial where he live-coding the game, but for the sake of the assignment, I did not watched the video and integrated the project straight to a clean Unity project, covering the various required (and optional) features on top of it, while refactoring the code in the process.
 
 
