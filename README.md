@@ -59,4 +59,12 @@ This assignment is part of my job application to Simbionix. I was assigned to bu
 To demonstrate my ability to read and understand other's people code, I bootstrapped from the following project
 (Angry Birds by ggghostmaker)[https://github.com/ggghostmaker/angrybirds]. He also published a [https://www.youtube.com/watch?v=r7UDs5kLoB4](video) tutorial where he live-coding the game, but for the sake of the assignment, I did not watched the video and integrated the project straight to a clean Unity project, covering the various required (and optional) features on top of it, while refactoring the code in the process.
 
+# Flow:
+Player is loading into a scene -> The player aims a bird towards the pigs -> If the pigs are being hitted they can potentially drop from their towers. Once they do they are being disposed -> Once the player killed all pigs, he gets an option to proceed to the next level or restart the current level. 
+
+# UI:
+1. Enables the player to mute/unmute the volume this setting is being saved to player prefs for consistancy.
+2. The player can quit the game at all times
+3. The player can restart/move to the next level at all times.
+
 
