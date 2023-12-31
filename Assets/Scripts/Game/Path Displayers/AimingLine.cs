@@ -89,7 +89,8 @@ public class AimingLine : MonoBehaviour
     }
 
     /// <summary>
-    /// Calculating the points forming the aiming line
+    /// Calculating the points forming the aiming line,
+    /// assuming the aiming line is perfectly horizontal.
     /// </summary>
     /// <param name="startPosition">The start position of the bird</param>
     /// <param name="initialVelocity">The velocity we have from the
@@ -109,21 +110,42 @@ public class AimingLine : MonoBehaviour
 
         for (int i = 0; i < _aimingLinePointsCount; i++)
         {
+            // Set the position of the current point.
             currentPosition += currentVelocity * timeStep;
+
+            // Factoring into the current velocity
+            // the earth-like physics for the next point.
             currentVelocity += Physics.gravity * timeStep;
 
+            // Adding the current position to the output.
             points.Add(currentPosition);
 
             // Create path points using the pathPoints reference
             PathPoints.Instance.CreateCurrentPathPoint(currentPosition, isAiming: true);
         }
 
+        return CalculateRotationOfTrajectoryPoints(points, startPosition, slingshotAngle);
+    }
+
+    /// <summary>
+    /// Getting list of horizontal points, and calculate their rotation using
+    /// Radians between every two points.
+    /// </summary>
+    /// <param name="points">List of points</param>
+    /// <param name="startPosition">The position of the bird.</param>
+    /// <param name="slingshotAngle">At what position the slingshot is pointing at?</param>
+    /// <returns>The list of points with rotation applied</returns>
+    private List<Vector3> CalculateRotationOfTrajectoryPoints(List<Vector3> points,
+        Vector3 startPosition, float slingshotAngle)
+    {
         // Calculate the average direction of the trajectory
         Vector3 averageDirection = Vector3.zero;
+
         for (int i = 1; i < points.Count; i++)
         {
             averageDirection += points[i] - points[i - 1];
         }
+
         averageDirection /= points.Count - 1;
 
         // Calculate the rotation angle based on the average direction
