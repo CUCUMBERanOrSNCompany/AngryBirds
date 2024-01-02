@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// Isn't being used
+/// Calculating the aiming line.
 /// </summary>
 public class AimingLine : MonoBehaviour
 {
