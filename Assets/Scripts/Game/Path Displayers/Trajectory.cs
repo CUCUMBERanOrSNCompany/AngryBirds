@@ -4,65 +4,38 @@ using UnityEngine;
 
 public class Trajectory : MonoBehaviour
 {
-    [SerializeField] int dotsNumber;
-    [SerializeField] GameObject DotsParent;
-    [SerializeField] GameObject DotsPerfab;
-    [SerializeField] float dotSpacing;
-    [SerializeField] [Range(0.01f, 0.5f)] float dotMinScale;
-    [SerializeField] [Range(0.5f, 1f)] float dotMaxScale;
+    /// <summary>
+    /// Number of points in the aiming line
+    /// </summary>
+    private const int _aimingLinePointsCount = 24;
 
-    Transform[] dotsList;
-    Vector2 pos;
-    float TimeStamp;
+    public static Trajectory Instance { get; private set; } = null; 
 
     private void Start()
     {
-        Hide();
-        prepareDots();
+        Instance = this;
     }
 
-
-    void prepareDots()
+    public void CalculateTrajectoryPoints(Vector3 ballPos , Vector3 forceApplied, float timeStep)
     {
-        dotsList = new Transform[dotsNumber];
-        DotsPerfab.transform.localScale = Vector3.one * dotMaxScale;
+        PathPoints.Instance.Clear();
 
-        float scale = dotMaxScale;
-        float scalefactor = scale / dotsNumber;
+        float currentTime = timeStep;
 
-        for(int i = 0; i < dotsNumber; i++)
+        Vector2 currentPosition;
+
+        for(int i = 0; i < _aimingLinePointsCount; i++)
         {
-            dotsList[i] = Instantiate(DotsPerfab, null).transform;
-            dotsList[i].parent = DotsParent.transform;
+            currentPosition.x = (ballPos.x + forceApplied.x * currentTime);
 
-            dotsList[i].localScale = Vector3.one * scale;
-            if(scale > dotMinScale)
-            {
-                scale -= scalefactor;
-            }
+            currentPosition.y = (ballPos.y + forceApplied.y * currentTime)
+                - (Physics2D.gravity.magnitude * currentTime * currentTime)
+                / 2f;
+
+            PathPoints.Instance.CreateCurrentPathPoint(currentPosition,
+                    isAiming: true);
+
+            currentTime += timeStep;
         }
-    }
-
-    public void UpdateDots(Vector3 ballPos , Vector3 forceApplied)
-    {
-        TimeStamp = dotSpacing;
-        for(int i = 0; i < dotsNumber; i++)
-        {
-            pos.x = (ballPos.x + forceApplied.x * TimeStamp);
-            pos.y = (ballPos.y + forceApplied.y * TimeStamp) - (Physics2D.gravity.magnitude * TimeStamp * TimeStamp) / 2f;
-
-            dotsList[i].position = pos;
-            TimeStamp += dotSpacing;
-        }
-    }
-
-
-    public void Show()
-    {
-        DotsParent.SetActive(true);
-    }
-    public void Hide()
-    {
-        DotsParent.SetActive(false);
     }
 }

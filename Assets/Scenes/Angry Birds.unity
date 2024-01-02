@@ -625,36 +625,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &356552577
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 356552578}
-  m_Layer: 0
-  m_Name: Aiming Points
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &356552578
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356552577}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 426011079}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &386649149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,8 +1125,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.2408314, y: -0.64973104, z: 88.93126}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 356552578}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1236,12 +1205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba7e8640ec5c4b3b89c11fcc204b9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotsNumber: 24
-  DotsParent: {fileID: 356552577}
-  DotsPerfab: {fileID: 6251741960911360028, guid: 5d959e430e17641f8985c215954d182f, type: 3}
-  dotSpacing: 0.09
-  dotMinScale: 0.18
-  dotMaxScale: 0.802
 --- !u!1 &444377705
 GameObject:
   m_ObjectHideFlags: 0
@@ -5998,7 +5961,6 @@ MonoBehaviour:
   BirdPrefab: {fileID: 552990144328371565, guid: 0fcb7f633e3bc9d428e11104884676e4, type: 3}
   BirdPositionOffset: -0.4
   Force: 5
-  _trajectory: {fileID: 426011084}
 --- !u!4 &2045168418
 Transform:
   m_ObjectHideFlags: 0

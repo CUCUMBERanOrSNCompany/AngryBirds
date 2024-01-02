@@ -79,7 +79,7 @@ public class Slingshot : MonoBehaviour
     /// </summary>
     private SFXManager _sfxManager = null;
 
-    [SerializeField] private Trajectory _trajectory = null;
+    //[SerializeField] private Trajectory _trajectory = null;
 
     #endregion
 
@@ -144,16 +144,14 @@ public class Slingshot : MonoBehaviour
             if (_birdCollider)
             {
                 _birdCollider.enabled = true;
-                //AimingLine.Instance.UpdateAimingLine(CurrentPosition, Center, _bird);
                 Vector3 birdForce = (CurrentPosition - Center.position) * Force * -1;
+                Trajectory.Instance.CalculateTrajectoryPoints(CurrentPosition, birdForce, 0.075f);
                 _sfxManager.PlaySFXNoOverride(SoundsEnum.Aim);
             }
         }
         else
         {
             ResetStrips();
-            //AimingLine.Instance.ShowHideAimingLine(false);
-            //_trajectory.Hide();
         }
     }
 
@@ -163,10 +161,6 @@ public class Slingshot : MonoBehaviour
     private void OnMouseDown()
     {
         _isMouseDown = true;
-
-        //AimingLine.Instance.ShowHideAimingLine(true);
-        _trajectory.Show();
-
     }
 
     /// <summary>
@@ -176,11 +170,7 @@ public class Slingshot : MonoBehaviour
     {
         _isMouseDown = false;
         Shoot();
-
-        //AimingLine.Instance.UpdateAimingLine(CurrentPosition, Center, _bird);
         CurrentPosition = IdlePosition.position;
-        //AimingLine.Instance.ShowHideAimingLine(false);
-        _trajectory.Hide();
     }
 
     /// <summary>
