@@ -79,8 +79,6 @@ public class Slingshot : MonoBehaviour
     /// </summary>
     private SFXManager _sfxManager = null;
 
-    //[SerializeField] private Trajectory _trajectory = null;
-
     #endregion
 
     #region Initializers
@@ -145,7 +143,7 @@ public class Slingshot : MonoBehaviour
             {
                 _birdCollider.enabled = true;
                 Vector3 birdForce = (CurrentPosition - Center.position) * Force * -1;
-                Trajectory.Instance.CalculateTrajectoryPoints(CurrentPosition, birdForce, 0.075f);
+                AimingLine.Instance.CalculateTrajectoryPoints(CurrentPosition, birdForce, 0.075f);
                 _sfxManager.PlaySFXNoOverride(SoundsEnum.Aim);
             }
         }
