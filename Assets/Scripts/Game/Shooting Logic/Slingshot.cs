@@ -169,6 +169,7 @@ public class Slingshot : MonoBehaviour
         _isMouseDown = false;
         Shoot();
         CurrentPosition = IdlePosition.position;
+
     }
 
     /// <summary>
