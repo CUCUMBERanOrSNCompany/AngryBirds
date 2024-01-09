@@ -1,59 +1,7 @@
 # AngryBirds
 
-# Assignment:
-Hi Or,
-
- 
-
-Below is a description of a hands on task which represents technical aspects of the job you are applying to:
-
- 
-
-The purpose of this task is for you to demonstrate the following:
-
-Knowledge in Unity3D.
-Basic problem solving skills in 3D environment.
-Reading & understanding other people’s code.
-Best practices in designing a project in Unity3D and in designing code in C#.
-Basic 3D Geometry mathematical & physical knowledge.
-Show off you can do cool stuff or make boring stuff look cool!!
- 
-
-You are requested to create an ‘Angry Birds’-style unity game in which the player launches projectiles at moving targets.
-
- 
-
-The project should involve all the following:
-
-Manually calculating & displaying the projectile path prior to launching.
-Preferably the targets should move on more complex/curved patterns rather than simple lines.
-Switching between at least 2 levels: The player should be able at all time go back to a menu and choose a level.
-Visuals: Include interesting animations, particles, shaders, etc.
-Included is a code file of a component that should aid you in your journey. Integrate it into your project and use it, I want to see that you can decipher what it does and how to use it. Alternatively, If you have a better way to implement what the code does or achieve better results, feel free to create your own implementation.
-Take all this work above you did and create a stunning demo from it!! I want Ariel (our VP R&D) to look at the screen and see beautiful stuff he’ll get excited about. That way when you’ll start working here he’ll love from already from the first day 😊
-I know there are many details undefined – they’re up to you to decide. See #6 in the beginning of the mail.
-                                  
-
-Take into account that timing is critical, I will not be able to wait much after the timeline we’ve agreed – I receive something by tomorrow (Wednesday the 27th) by mid-day the latest. Take that into account.
-
-Once ready send it to me (if it’s big email me , I’ll send you an upload link). And we’ll schedule a meeting to discuss it.
-
- 
-
-It’s not a university test, so if you have questions, want to discuss details, share thoughts, feel free to call me.
-
- 
-
-Please reply to me and confirm that you received this mail, with the attached .cs file, read it and generally understand it.
-
- 
-
-Thank you very much for the effort! It’s understand it is not a trivial effort for you to make. Thank you!
-
-
 # Introduction:
-This assignment is part of my job application to Simbionix. I was assigned to build a Unity game replicating Angry Birds.
-
+This assignment is part of my job application to a Unity Developer position. I was assigned to build a Unity game replicating Angry Birds.
 
 # Bootstrapping:
 To demonstrate my ability to read and understand other's people code, I bootstrapped from the following project
@@ -63,8 +11,22 @@ To demonstrate my ability to read and understand other's people code, I bootstra
 Player is loading into a scene -> The player aims a bird towards the pigs -> If the pigs are being hitted they can potentially drop from their towers. Once they do they are being disposed -> Once the player killed all pigs, he gets an option to proceed to the next level or restart the current level. 
 
 # UI:
-1. Enables the player to mute/unmute the volume this setting is being saved to player prefs for consistancy.
+1. Enables the player to mute/unmute the volume this setting is being saved to player prefs for consistancy between runs.
 2. The player can quit the game at all times
 3. The player can restart/move to the next level at all times.
 
+# My take:
+On top of the project I bootstrapped from, I did the follwoing:
+
+1. Refactoring.
+2. Integrating Reactive Code using UniRx.
+3. Added an aiming line.
+4. Created an Objects Pool for the Points.
+5. Added a second level.
+6. Added UI.
+7. Integrated IDisposable into the Pig and Bird entities, for enhance performance.
+8. Used Dirty Flag.
+9. Doubled down on Singleton DP.
+
+    
 
