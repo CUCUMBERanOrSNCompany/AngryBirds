@@ -1,7 +1,7 @@
 # AngryBirds
 
 # Introduction:
-This assignment is part of my job application to a Unity Developer position. I was assigned to build a Unity game replicating Angry Birds.
+This assignment is part of my job application for a Unity Developer position. I was assigned to build a Unity game replicating Angry Birds.
 
 # Bootstrapping:
 To demonstrate my ability to read and understand other's people code, I bootstrapped from the following project
