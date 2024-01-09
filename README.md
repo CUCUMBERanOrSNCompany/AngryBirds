@@ -1,4 +1,6 @@
 # AngryBirds
+<img width="768" alt="Screenshot 2024-01-09 at 22 17 10" src="https://github.com/CUCUMBERanOrSNCompany/AngryBirds/assets/70776104/3b790951-3abf-476e-964b-a2378a8af8b6">
+
 
 # Introduction:
 This assignment is part of my job application for a Unity Developer position. I was assigned to build a Unity game replicating Angry Birds.
